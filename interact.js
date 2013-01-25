@@ -1,72 +1,3 @@
-
-      
-var console = {};
-console.log = function(){
-    document.body.getElementsByClassName('output')[0].innerText += Array.prototype.slice.call(arguments).join(', ') + '\n';
-}
-
-var errors = [];
-window.onerror = function(error){
-    errors.push(error);
-}
-
-window.onload = function(){
-    var errorsString = "",
-        outputArea = document.body.getElementsByClassName('output')[0];
-        
-    errors.forEach(function(error){
-        errorsString += error + '\n';
-    });
-    outputArea.innerText = errorsString;
-    window.onerror = function(error){
-        outputArea.innerText += error + '\n';
-    }  
-    interact.on('start', document, function(interaction){
-        var spot = document.createElement('div');
-        spot.className = 'spot';
-        
-        spot.setAttribute('style', 'left:' + (interaction.pageX - 100) + 'px; top:' + (interaction.pageY - 100) + 'px;');
-                
-        interaction.spot = spot;
-        
-        document.body.appendChild(spot);
-    });
-    interact.on('drag', document, function(interaction){
-        if(interaction.getAllInteractions().length < 2){
-            interaction.preventDefault();            
-        }
-        var diameter = (interaction.getSpeed()+1)*30;
-        interaction.spot.setAttribute('style', 'border-radius:' + diameter/2 + ';height:'+diameter+'px;width:'+diameter+'px;left:' + (interaction.pageX - diameter/2) + 'px; top:' + (interaction.pageY - diameter/2) + 'px; -webkit-transform:rotateZ(' + (interaction.getCurrentAngle(true) -45)  + 'deg);');
-    });
-    interact.on('end destroy', document, function(interaction){
-        interaction.spot && interaction.spot.parentNode.removeChild(interaction.spot);
-        interaction.spot = null;
-    });
-    interact.on('activate', document, function(interaction){
-    });
-    
-    interact.on('start', document, function(interaction){
-        if(interaction.target.className.indexOf('hitter') >= 0){
-            interaction.target.className = 'hitter started';
-        }
-    });
-    interact.on('move', document, function(interaction){
-        if(interaction.target.className.indexOf('hitter') >= 0){
-            interaction.target.className = 'hitter moved';
-        }
-    });
-    interact.on('drag', document, function(interaction){
-        if(interaction.target.className.indexOf('hitter') >= 0){
-            interaction.target.className = 'hitter dragged';
-        }
-    });
-    interact.on('end', document, function(interaction){
-        if(interaction.target.className.indexOf('hitter') >= 0){
-            interaction.target.className = 'hitter ended';
-        }
-    });
-};
-
 (function (){
     // http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
     var isTouch = !!('ontouchstart' in window) // works on most browsers 
@@ -77,7 +8,7 @@ window.onload = function(){
         minMoveDistance = 5,
         interact = window.interact = {},
         maximumMovesToPersist = 1000, // Should be plenty..
-        propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY'.split(','); // Stuff that will be on every interaction.
+        propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY,shiftKey,x,y'.split(','); // Stuff that will be on every interaction.
     
     // document.body.style.webkitTouchCallout = 'none';
     // document.body.style.KhtmlUserSelect = 'none';
@@ -326,11 +257,15 @@ window.onload = function(){
     
     function trigger(type, target, event, interaction, eventInfo){
         var currentTarget = target,
-            shouldPreventDefault = false;
+            shouldPreventDefault = false,
+            shouldStopPropagation = false;
                 
         interaction.originalEvent = event;
         interaction.preventDefault = function(){
             shouldPreventDefault = true;
+        }
+        interaction.stopPropagation = function(){
+            shouldStopPropagation = true;
         }
         
         fixTarget(interaction);
@@ -341,10 +276,14 @@ window.onload = function(){
             currentTarget._interactions[type].forEach(function(callback){
                 callback(interaction);
             });
-            currentTarget = currentTarget.parentNode;            
+            currentTarget = currentTarget.parentNode;
         }
         if(shouldPreventDefault){
             event.preventDefault();
+        }
+        
+        if(shouldStopPropagation){
+            event.stopPropagation();
         }
     }
       
