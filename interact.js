@@ -1,4 +1,4 @@
-(function (){
+    (function (){
     // http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
     var isTouch = !!('ontouchstart' in window) // works on most browsers 
       || !!('onmsgesturechange' in window); // works on ie10
@@ -11,17 +11,13 @@
         propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY,shiftKey,x,y'.split(','); // Stuff that will be on every interaction.
     
     // document.body.style.webkitTouchCallout = 'none';
-    // document.body.style.KhtmlUserSelect = 'none';
+    // document.body.style.KhtmlUserSelect = 'none';    
     
-    
-    
-    function fixTarget(interaction) {
+    function getActualTarget() {
         // For some reason touch browsers never change the event target during a touch.
         // This is, lets face it, fucking stupid.
-        interaction.target = document.elementFromPoint(interaction.pageX - window.scrollX, interaction.pageY - window.scrollY);
+        return document.elementFromPoint(this.pageX - window.scrollX, this.pageY - window.scrollY);
     }
-    
-    
     
     
     function getMoveDistance(x1,y1,x2,y2){
@@ -72,12 +68,15 @@
         oldInteraction && oldInteraction.destroy();
         
         this.identifier = interactionInfo.identifier;
+
+        this.moves = [];
         
         interactions.push(this);
     }
     
     Interaction.prototype = {
-        constructor: Interaction,
+        constructor: Interaction,        
+        getActualTarget: getActualTarget,
         destroy: function(){
             trigger('destroy', this.target, this, this);
             destroyInteraction(this);
@@ -107,10 +106,6 @@
             
             // Update the interaction
             copyInteractionInfo(this, interactionInfo);
-            
-            if(!this.moves){
-                this.moves = [];
-            }
             
             // Memory saver, culls any moves that are over the maximum to keep.
             this.moves = this.moves.slice(-maximumMovesToPersist);
@@ -267,8 +262,6 @@
         interaction.stopPropagation = function(){
             shouldStopPropagation = true;
         }
-        
-        fixTarget(interaction);
         
         while(currentTarget){
             currentTarget._interactions &&
