@@ -1,4 +1,12 @@
-    (function (){
+(function (root, factory) {
+    if (typeof exports === 'object') {
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        define(factory);
+    } else {
+        root.interact = factory();
+    }
+}(this, function () {
     // http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
     var isTouch = !!('ontouchstart' in window) // works on most browsers 
       || !!('onmsgesturechange' in window); // works on ie10
@@ -6,7 +14,7 @@
       
     var interactions = [],
         minMoveDistance = 5,
-        interact = window.interact = {},
+        interact = {},
         maximumMovesToPersist = 1000, // Should be plenty..
         propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY,shiftKey,x,y'.split(','); // Stuff that will be on every interaction.
     
@@ -248,6 +256,8 @@
             }
             target._interactions[type].push(callback);
         }
+
+        return this;
     }
     
     function trigger(type, target, event, interaction, eventInfo){
@@ -347,4 +357,6 @@
     }
     
     interact.on = on;
+
+    return interact;
 })();

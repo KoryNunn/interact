@@ -1,0 +1,23 @@
+{
+  "author": "Kory Nunn <knunn187@gmail.com>",
+  "contributors": [
+    {
+      "name": "Kory Nunn",
+      "email": "knunn187@gmail.com"
+    }
+  ],
+  "name": "interact",
+  "description": "A small interaction event unifiying library",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/korynunn/interact.git"
+  },
+  "main": "interact.js",
+  "keywords": [
+    "events",
+    "touch",
+    "drag-n-drop"
+  ],
+  "license": "MIT"
+}
