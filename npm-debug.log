@@ -1,0 +1,135 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@1.1.65
+3 info using node@v0.8.14
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose publish [ '.' ]
+6 verbose read json C:\Dropbox\dev\github\interact\package.json
+7 verbose cache add [ '.', null ]
+8 silly cache add name=undefined spec="." args=[".",null]
+9 verbose parsed url { pathname: '.', path: '.', href: '.' }
+10 silly lockFile 3a52ce78- .
+11 verbose lock . C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\3a52ce78-.lock
+12 verbose read json package.json
+13 verbose tar pack [ 'C:\\Users\\Kory.korys-laptop\\AppData\\Local\\Temp\\npm-17080\\1367206933439-0.6587850006762892\\tmp.tgz',
+13 verbose tar pack   '.' ]
+14 verbose tarball C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\tmp.tgz
+15 verbose folder .
+16 info prepublish interact@0.1.0
+17 silly lockFile da97205b-33439-0-6587850006762892-tmp-tgz C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\tmp.tgz
+18 verbose lock C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\tmp.tgz C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\da97205b-33439-0-6587850006762892-tmp-tgz.lock
+19 silly lockFile da97205b-33439-0-6587850006762892-tmp-tgz C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\tmp.tgz
+20 verbose tar unpack C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\tmp.tgz
+21 silly lockFile c2751d80-33439-0-6587850006762892-package C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\package
+22 verbose lock C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\c2751d80-33439-0-6587850006762892-package.lock
+23 silly gunzTarPerm modes [ '755', '644' ]
+24 silly gunzTarPerm extractEntry package.json
+25 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+26 silly gunzTarPerm extractEntry .npmignore
+27 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+28 silly gunzTarPerm extractEntry README.md
+29 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+30 silly gunzTarPerm extractEntry interact.js
+31 silly gunzTarPerm modified mode [ 'interact.js', 438, 420 ]
+32 silly gunzTarPerm extractEntry demo.html
+33 silly gunzTarPerm modified mode [ 'demo.html', 438, 420 ]
+34 verbose read json C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\package\package.json
+35 silly lockFile c2751d80-33439-0-6587850006762892-package C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\package
+36 verbose from cache C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\package\package.json
+37 verbose tar pack [ 'C:\\Users\\Kory.korys-laptop\\AppData\\Roaming\\npm-cache\\interact\\0.1.0\\package.tgz',
+37 verbose tar pack   'C:\\Users\\Kory.korys-laptop\\AppData\\Local\\Temp\\npm-17080\\1367206933439-0.6587850006762892\\package' ]
+38 verbose tarball C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz
+39 verbose folder C:\Users\Kory.korys-laptop\AppData\Local\Temp\npm-17080\1367206933439-0.6587850006762892\package
+40 silly lockFile c3cd8ffe-cache-interact-0-1-0-package-tgz C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz
+41 verbose lock C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\c3cd8ffe-cache-interact-0-1-0-package-tgz.lock
+42 silly lockFile c3cd8ffe-cache-interact-0-1-0-package-tgz C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz
+43 silly lockFile e05636bf-npm-cache-interact-0-1-0-package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package
+44 verbose lock C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\e05636bf-npm-cache-interact-0-1-0-package.lock
+45 silly lockFile e05636bf-npm-cache-interact-0-1-0-package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package
+46 verbose tar unpack C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz
+47 silly lockFile e05636bf-npm-cache-interact-0-1-0-package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package
+48 verbose lock C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\e05636bf-npm-cache-interact-0-1-0-package.lock
+49 silly gunzTarPerm modes [ '755', '644' ]
+50 silly gunzTarPerm extractEntry package.json
+51 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+52 silly gunzTarPerm extractEntry .npmignore
+53 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+54 silly gunzTarPerm extractEntry README.md
+55 silly gunzTarPerm modified mode [ 'README.md', 438, 420 ]
+56 silly gunzTarPerm extractEntry interact.js
+57 silly gunzTarPerm modified mode [ 'interact.js', 438, 420 ]
+58 silly gunzTarPerm extractEntry demo.html
+59 silly gunzTarPerm modified mode [ 'demo.html', 438, 420 ]
+60 verbose read json C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package\package.json
+61 silly lockFile e05636bf-npm-cache-interact-0-1-0-package C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package
+62 silly shasum updated bytes 4189
+63 info shasum f95496449e4a17d04733512c9988511ee8211c55
+63 info shasum C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz
+64 verbose from cache C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package\package.json
+65 verbose chmod C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz 644
+66 silly chown skipping for windows C:\Users\Kory.korys-laptop\AppData\Roaming\npm-cache\interact\0.1.0\package.tgz
+67 silly lockFile 3a52ce78- .
+68 silly publish { author: { name: 'Kory Nunn', email: 'knunn187@gmail.com' },
+68 silly publish   contributors: [ { name: 'Kory Nunn', email: 'knunn187@gmail.com' } ],
+68 silly publish   name: 'interact',
+68 silly publish   description: 'A small interaction event unifiying library',
+68 silly publish   version: '0.1.0',
+68 silly publish   repository: { type: 'git', url: 'https://github.com/korynunn/interact.git' },
+68 silly publish   main: 'interact.js',
+68 silly publish   keywords: [ 'events', 'touch', 'drag-n-drop' ],
+68 silly publish   license: 'MIT',
+68 silly publish   readme: 'interact\r\n========\r\n\r\nAn interaction unifying library.',
+68 silly publish   readmeFilename: 'README.md',
+68 silly publish   _id: 'interact@0.1.0',
+68 silly publish   dist: { shasum: 'f95496449e4a17d04733512c9988511ee8211c55' } }
+69 verbose url raw interact
+70 verbose url resolving [ 'https://registry.npmjs.org/', './interact' ]
+71 verbose url resolved https://registry.npmjs.org/interact
+72 info trying registry request attempt 1 at 13:42:13
+73 http PUT https://registry.npmjs.org/interact
+74 http 409 https://registry.npmjs.org/interact
+75 verbose url raw interact
+76 verbose url resolving [ 'https://registry.npmjs.org/', './interact' ]
+77 verbose url resolved https://registry.npmjs.org/interact
+78 info trying registry request attempt 1 at 13:42:16
+79 http GET https://registry.npmjs.org/interact
+80 http 200 https://registry.npmjs.org/interact
+81 verbose url raw interact/0.1.0/-tag/latest
+82 verbose url resolving [ 'https://registry.npmjs.org/',
+82 verbose url resolving   './interact/0.1.0/-tag/latest' ]
+83 verbose url resolved https://registry.npmjs.org/interact/0.1.0/-tag/latest
+84 info trying registry request attempt 1 at 13:42:18
+85 http PUT https://registry.npmjs.org/interact/0.1.0/-tag/latest
+86 http 403 https://registry.npmjs.org/interact/0.1.0/-tag/latest
+87 error publish Error sending version data
+88 error Error: forbidden user: korynunn not authorized to modify interact
+88 error Changed: description "a readable stream of mouse view events, wrapping up pointer-lock and drag-stream" -> "A small interaction event unifiying library"
+88 error Changed: dist-tags.latest "0.0.3" -> "0.1.0"
+88 error Added: versions.0.1.0
+88 error Changed: time.modified "2013-03-05T23:32:52.025Z" -> "2013-04-29T03:42:20.363Z"
+88 error Added: time.0.1.0
+88 error Changed: author.name "Chris Dickinson" -> "Kory Nunn"
+88 error Changed: author.email "chris@neversaw.us" -> "knunn187@gmail.com"
+88 error Changed: repository.url "git://github.com/chrisdickinson/interact.git" -> "https://github.com/korynunn/interact.git": interact/0.1.0/-tag/latest
+88 error     at RegClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:259:14)
+88 error     at Request.init.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\main.js:120:22)
+88 error     at Request.EventEmitter.emit (events.js:99:17)
+88 error     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\main.js:648:16)
+88 error     at Request.EventEmitter.emit (events.js:126:20)
+88 error     at IncomingMessage.Request.start.self.req.self.httpModule.request.buffer (C:\Program Files\nodejs\node_modules\npm\node_modules\request\main.js:610:14)
+88 error     at IncomingMessage.EventEmitter.emit (events.js:126:20)
+88 error     at IncomingMessage._emitEnd (http.js:366:10)
+88 error     at HTTPParser.parserOnMessageComplete [as onMessageComplete] (http.js:149:23)
+88 error     at CleartextStream.socketOnData [as ondata] (http.js:1367:20)
+89 error If you need help, you may report this log at:
+89 error     <http://github.com/isaacs/npm/issues>
+89 error or email it to:
+89 error     <npm-@googlegroups.com>
+90 error System Windows_NT 6.2.9200
+91 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+92 error cwd C:\Dropbox\dev\github\interact
+93 error node -v v0.8.14
+94 error npm -v 1.1.65
+95 verbose exit [ 1, true ]
