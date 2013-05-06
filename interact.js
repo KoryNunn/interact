@@ -365,7 +365,8 @@
         }
     }
     
-    interact.on = on;
+    interact.on = on;    
+    interact.off = off;
 
     return interact;
 })();
