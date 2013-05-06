@@ -259,6 +259,15 @@
 
         return this;
     }
+
+    // basic but functional
+    function off(type, target, callback){
+        var index = target._interactions[type].indexOf(callback);
+
+        index >=0 && target._interactions[type].splice(index, 1);
+
+        return this;
+    }
     
     function trigger(type, target, event, interaction, eventInfo){
         var currentTarget = target,
