@@ -262,9 +262,15 @@
 
     // basic but functional
     function off(type, target, callback){
-        var index = target._interactions[type].indexOf(callback);
+        if(
+            target &&
+            target._interactions &&
+            Array.isArray(target._interactions[type])
+        ){
+            var index = target._interactions[type].indexOf(callback);
 
-        index >=0 && target._interactions[type].splice(index, 1);
+            index >=0 && target._interactions[type].splice(index, 1);
+        }
 
         return this;
     }
