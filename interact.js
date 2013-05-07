@@ -369,4 +369,4 @@
     interact.off = off;
 
     return interact;
-})();
+}));
