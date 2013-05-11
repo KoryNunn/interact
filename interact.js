@@ -336,7 +336,7 @@
         addEvent(document, 'touchend', end);
     }else{
         // there will only be one interaction on desktop. Make it now.
-        new Interaction(event);
+        new Interaction();
         
         var mouseIsDown = false;
         addEvent(document, 'mousedown', function(event){
