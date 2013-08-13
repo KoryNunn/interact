@@ -176,11 +176,29 @@
             // or we are forcing an activation (on 'click' for example)
             // Trigger an activate.
             
-            if(activate === true || (activate !== false && getMoveDistance(this.pageX, this.lastStart.pageY, this.pageX, this.end.pageY) < minMoveDistance)){
+            if(activate === true || (activate !== false && getMoveDistance(this.lastStart.pageX, this.lastStart.pageY, this.pageX, this.pageY) < minMoveDistance)){
                 trigger('activate', event.target, event, this);
             }
             
             trigger('end', event.target, event, this);
+            
+            return this;
+        },
+        cancel: function(event, interactionInfo, activate){
+            // If you don't know what this is for by now, you're an idiot...       
+            if(!interactionInfo){
+                interactionInfo = event;
+            }
+            
+            // Update the interaction
+            copyInteractionInfo(this, interactionInfo);
+        
+            // If the interaction didnt move further than the minMoveDistance,
+            // and we are not explicitly telling the interaction it is not an activate (eg, mouse click)
+            // or we are forcing an activation (on 'click' for example)
+            // Trigger an activate.
+            
+            trigger('cancel', event.target, event, this);
             
             return this;
         },
@@ -282,10 +300,10 @@
                 
         interaction.originalEvent = event;
         interaction.preventDefault = function(){
-            shouldPreventDefault = true;
+            event.preventDefault();
         }
         interaction.stopPropagation = function(){
-            shouldStopPropagation = true;
+            event.stopPropagation();
         }
         
         while(currentTarget){
@@ -295,13 +313,6 @@
                 callback(interaction);
             });
             currentTarget = currentTarget.parentNode;
-        }
-        if(shouldPreventDefault){
-            event.preventDefault();
-        }
-        
-        if(shouldStopPropagation){
-            event.stopPropagation();
         }
     }
       
@@ -329,11 +340,20 @@
             getInteraction(touch.identifier).end(event, touch).destroy();
         }
     }
+    function cancel(event){
+        var touch;
+
+        for(var i = 0; i < event.changedTouches.length; i++){
+            touch = event.changedTouches[i];
+            getInteraction(touch.identifier).cancel(event, touch).destroy();
+        }
+    }
     
     if(isTouch){
         addEvent(document, 'touchstart', start);
         addEvent(document, 'touchmove', drag);
         addEvent(document, 'touchend', end);
+        addEvent(document, 'touchcancel', cancel);
     }else{
         // there will only be one interaction on desktop. Make it now.
         new Interaction();
@@ -350,7 +370,7 @@
             if(mouseIsDown){
                 getInteraction().drag(event);
             }else{
-                getInteraction().move(event);            
+                getInteraction().move(event);
             }
         });
         addEvent(document, 'mouseup', function(event){
