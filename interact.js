@@ -7,11 +7,6 @@
         root.interact = factory();
     }
 }(this, function () {
-    // http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
-    var isTouch = !!('ontouchstart' in window) // works on most browsers 
-      || !!('onmsgesturechange' in window); // works on ie10
-      
-      
     var interactions = [],
         minMoveDistance = 5,
         interact = {},
@@ -178,6 +173,7 @@
             
             if(activate === true || (activate !== false && getMoveDistance(this.lastStart.pageX, this.lastStart.pageY, this.pageX, this.pageY) < minMoveDistance)){
                 trigger('activate', event.target, event, this);
+                event.preventDefault();
             }
             
             trigger('end', event.target, event, this);
@@ -294,9 +290,7 @@
     }
     
     function trigger(type, target, event, interaction, eventInfo){
-        var currentTarget = target,
-            shouldPreventDefault = false,
-            shouldStopPropagation = false;
+        var currentTarget = target;
                 
         interaction.originalEvent = event;
         interaction.preventDefault = function(){
@@ -349,38 +343,30 @@
         }
     }
     
-    if(isTouch){
-        addEvent(document, 'touchstart', start);
-        addEvent(document, 'touchmove', drag);
-        addEvent(document, 'touchend', end);
-        addEvent(document, 'touchcancel', cancel);
-    }else{
-        // there will only be one interaction on desktop. Make it now.
-        new Interaction();
-        
-        var mouseIsDown = false;
-        addEvent(document, 'mousedown', function(event){
-            mouseIsDown = true;
-            getInteraction().start(event);
-        });
-        addEvent(document, 'mousemove', function(event){
-            if(!interactions.length){
-                new Interaction(event);
-            }
-            if(mouseIsDown){
-                getInteraction().drag(event);
-            }else{
-                getInteraction().move(event);
-            }
-        });
-        addEvent(document, 'mouseup', function(event){
-            mouseIsDown = false;
-            getInteraction().end(event, null, false);
-        });
-        addEvent(document, 'click', function(event){
-            getInteraction().end(event, null, true);
-        });
-    }
+    addEvent(document, 'touchstart', start);
+    addEvent(document, 'touchmove', drag);
+    addEvent(document, 'touchend', end);
+    addEvent(document, 'touchcancel', cancel);
+    
+    var mouseIsDown = false;
+    addEvent(document, 'mousedown', function(event){
+        mouseIsDown = true;
+        getInteraction().start(event);
+    });
+    addEvent(document, 'mousemove', function(event){
+        if(!interactions.length){
+            new Interaction(event);
+        }
+        if(mouseIsDown){
+            getInteraction().drag(event);
+        }else{
+            getInteraction().move(event);
+        }
+    });
+    addEvent(document, 'mouseup', function(event){
+        mouseIsDown = false;
+        getInteraction().end(event, null);
+    });
     
     function addEvent(element, type, callback) {
         if(element.addEventListener){
@@ -394,5 +380,5 @@
     interact.on = on;    
     interact.off = off;
 
-    return interact;
+    return window.interact = interact;
 }));
