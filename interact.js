@@ -171,7 +171,7 @@
             // or we are forcing an activation (on 'click' for example)
             // Trigger an activate.
             
-            if(activate === true || (activate !== false && getMoveDistance(this.lastStart.pageX, this.lastStart.pageY, this.pageX, this.pageY) < minMoveDistance)){
+            if(activate === true || (this.lastStart && activate !== false && getMoveDistance(this.lastStart.pageX, this.lastStart.pageY, this.pageX, this.pageY) < minMoveDistance)){
                 trigger('activate', event.target, event, this);
                 event.preventDefault();
             }
