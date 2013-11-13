@@ -10,7 +10,8 @@
     var interactions = [],
         minMoveDistance = 5,
         interact = {},
-        maximumMovesToPersist = 1000; // Should be plenty..
+        maximumMovesToPersist = 1000, // Should be plenty..
+        propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY,shiftKey,x,y'.split(','); // Stuff that will be on every interaction.
 
     // document.body.style.webkitTouchCallout = 'none';
     // document.body.style.KhtmlUserSelect = 'none';
@@ -46,7 +47,9 @@
     }
 
     function setInheritedData(interaction, data){
-        interaction.__proto__.__proto__ = data;
+        for(var i = 0; i < propertiesToCopy.length; i++) {
+            interaction[propertiesToCopy[i]] = data[propertiesToCopy[i]]
+        }
     }
 
     function Interaction(event, interactionInfo){
@@ -87,7 +90,7 @@
             var lastStart = {
                     time: new Date()
                 };
-            lastStart.__proto__ = interactionInfo;
+            setInheritedData(lastStart, interactionInfo);
             this.lastStart = lastStart;
 
             setInheritedData(this, interactionInfo);
@@ -104,7 +107,7 @@
             var currentTouch = {
                     time: new Date()
                 };
-            currentTouch.__proto__ = interactionInfo;
+            setInheritedData(currentTouch, interactionInfo);
 
             // Update the interaction
             setInheritedData(this, interactionInfo);
@@ -132,7 +135,7 @@
                     isDrag: true
                 };
 
-            currentTouch.__proto__ = interactionInfo;
+            setInheritedData(currentTouch, interactionInfo);
 
             // Update the interaction
             setInheritedData(this, interactionInfo);
@@ -177,7 +180,7 @@
             }
 
             // Update the interaction
-            this.__proto__ = interactionInfo;
+            setInheritedData(this, interactionInfo);
 
             trigger('cancel', event.target, event, this);
 
