@@ -153,7 +153,7 @@
                 this.dragStarted = true;
             }
 
-            var lastDrag = this.moves[this.moves.length-2];
+            var lastDrag = this.moves[this.moves.length-2] || this.lastStart;
             lastDrag && (currentTouch.angle = Math.atan2(currentTouch.pageY - lastDrag.pageY, currentTouch.pageX - lastDrag.pageX) * 180 / Math.PI);
             this.angle = currentTouch.angle || 0;
 
