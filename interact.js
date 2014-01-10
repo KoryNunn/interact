@@ -22,6 +22,12 @@
         return document.elementFromPoint(this.pageX - window.scrollX, this.pageY - window.scrollY);
     }
 
+    function getMoveDelta(x1,y1,x2,y2){
+        var adj = Math.abs(x1 - x2),
+            opp = Math.abs(y1 - y2);
+
+        return Math.sqrt(Math.pow(adj,2) + Math.pow(opp,2));
+    }
 
     function getMoveDistance(x1,y1,x2,y2){
         var adj = Math.abs(x1 - x2),
@@ -192,6 +198,17 @@
                     previous = this.moves[this.moves.length-2];
 
                 return getMoveDistance(current.pageX, current.pageY, previous.pageX, previous.pageY);
+            }
+        },
+        getMoveDelta: function(){
+            if(this.moves.length > 1){
+                var current = this.moves[this.moves.length-1],
+                    previous = this.moves[this.moves.length-2];
+
+                return {
+                    x: current.pageX - previous.pageX,
+                    y: current.pageY - previous.pageY
+                };
             }
         },
         getSpeed: function(){
