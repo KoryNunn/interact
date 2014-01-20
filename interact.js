@@ -17,6 +17,8 @@ Interact.prototype.on = function(eventName, target, callback){
         callback: callback,
         interact: this
     });
+
+    return this;
 };
 Interact.prototype.emit = function(eventName, target, event, interaction){
     if(!target){
@@ -44,6 +46,8 @@ Interact.prototype.emit = function(eventName, target, event, interaction){
         });
         currentTarget = currentTarget.parentNode;
     }
+
+    return this;
 };
 Interact.prototype.removeListener = function(eventName, target, callback){
     if(!target || !target._interactEvents || !target._interactEvents[eventName]){
@@ -58,6 +62,8 @@ Interact.prototype.removeListener = function(eventName, target, callback){
             i--;
         }
     }
+
+    return this;
 };
 interact = new Interact();
 
