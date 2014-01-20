@@ -49,6 +49,7 @@ Interact.prototype.emit = function(eventName, target, event, interaction){
 
     return this;
 };
+Interact.prototype.off =
 Interact.prototype.removeListener = function(eventName, target, callback){
     if(!target || !target._interactEvents || !target._interactEvents[eventName]){
         return;
