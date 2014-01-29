@@ -68,9 +68,18 @@ Interact.prototype.removeListener = function(eventName, target, callback){
 };
 interact = new Interact();
 
-function getActualTarget() {
     // For some reason touch browsers never change the event target during a touch.
     // This is, lets face it, fucking stupid.
+function getActualTarget() {
+    var scrollX = window.scrollX,
+        scrollY = window.scrollY;
+
+    // IE is stupid and doesn't support scrollX/Y
+    if(scrollX === undefined){
+        scrollX = document.body.scrollLeft;
+        scrollY = document.body.scrollTop;
+    }
+
     return document.elementFromPoint(this.pageX - window.scrollX, this.pageY - window.scrollY);
 }
 
