@@ -19,5 +19,8 @@
     "touch",
     "drag-n-drop"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "crel": "^1.1.2"
+  }
 }

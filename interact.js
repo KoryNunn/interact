@@ -155,6 +155,7 @@ Interaction.prototype = {
 
         setInheritedData(this, interactionInfo);
 
+        this.phase = 'start';
         interact.emit('start', event.target, event, this);
         return this;
     },
@@ -182,6 +183,7 @@ Interaction.prototype = {
         lastMove && (currentTouch.angle = Math.atan2(currentTouch.pageY - lastMove.pageY, currentTouch.pageX - lastMove.pageX) * 180 / Math.PI);
         this.angle = currentTouch.angle || 0;
 
+        this.phase = 'move';
         interact.emit('move', event.target, event, this);
         return this;
     },
@@ -219,6 +221,7 @@ Interaction.prototype = {
         this.angle = currentTouch.angle || 0;
 
         if(this.dragStarted){
+            this.phase = 'drag';
             interact.emit('drag', event.target, event, this);
         }
         return this;
@@ -231,6 +234,7 @@ Interaction.prototype = {
         // Update the interaction
         setInheritedData(this, interactionInfo);
 
+        this.phase = 'end';
         interact.emit('end', event.target, event, this);
 
         return this;
@@ -243,6 +247,7 @@ Interaction.prototype = {
         // Update the interaction
         setInheritedData(this, interactionInfo);
 
+        this.phase = 'cancel';
         interact.emit('cancel', event.target, event, this);
 
         return this;
@@ -303,6 +308,9 @@ Interaction.prototype = {
                 angle = angle/stepsUsed;
             }
         }
+        if(angle === Infinity){
+            return firstAngle;
+        }
         return angle;
     },
     getAllInteractions: function(){
@@ -351,19 +359,30 @@ addEvent(document, 'touchcancel', cancel);
 var mouseIsDown = false;
 addEvent(document, 'mousedown', function(event){
     mouseIsDown = true;
+
     if(!interactions.length){
         new Interaction(event);
     }
+
+    var interaction = getInteraction();
+
+    if(!interaction){
+        return;
+    }
+
     getInteraction().start(event);
 });
 addEvent(document, 'mousemove', function(event){
     if(!interactions.length){
         new Interaction(event);
     }
+
     var interaction = getInteraction();
+
     if(!interaction){
         return;
     }
+
     if(mouseIsDown){
         interaction.drag(event);
     }else{
@@ -372,11 +391,15 @@ addEvent(document, 'mousemove', function(event){
 });
 addEvent(document, 'mouseup', function(event){
     mouseIsDown = false;
+
     var interaction = getInteraction();
+
     if(!interaction){
         return;
     }
+
     interaction.end(event, null);
+    interaction.destroy();
 });
 
 function addEvent(element, type, callback) {
