@@ -112,6 +112,10 @@ function setInheritedData(interaction, data){
     }
 }
 
+function getAngle(deltaPoint){
+    return Math.atan2(deltaPoint.x, -deltaPoint.y) * 180 / Math.PI;
+}
+
 function Interaction(event, interactionInfo){
     // If there is no event (eg: desktop) just make the identifier undefined
     if(!event){
@@ -148,7 +152,8 @@ Interaction.prototype = {
         }
 
         var lastStart = {
-                time: new Date()
+                time: new Date(),
+                phase: 'start'
             };
         setInheritedData(lastStart, interactionInfo);
         this.lastStart = lastStart;
@@ -166,7 +171,8 @@ Interaction.prototype = {
         }
 
         var currentTouch = {
-                time: new Date()
+                time: new Date(),
+                phase: 'move'
             };
 
         setInheritedData(currentTouch, interactionInfo);
@@ -179,9 +185,13 @@ Interaction.prototype = {
         // Memory saver, culls any moves that are over the maximum to keep.
         this.moves = this.moves.slice(-maximumMovesToPersist);
 
-        var lastMove = this.moves[this.moves.length-2];
-        lastMove && (currentTouch.angle = Math.atan2(currentTouch.pageY - lastMove.pageY, currentTouch.pageX - lastMove.pageX) * 180 / Math.PI);
-        this.angle = currentTouch.angle || 0;
+        var moveDelta = this.getMoveDelta(),
+            angle = 0;
+        if(moveDelta){
+            angle = getAngle(moveDelta);
+        }
+
+        this.angle = currentTouch.angle = angle;
 
         this.phase = 'move';
         interact.emit('move', event.target, event, this);
@@ -195,7 +205,7 @@ Interaction.prototype = {
 
         var currentTouch = {
                 time: new Date(),
-                isDrag: true
+                phase: 'drag'
             };
 
         setInheritedData(currentTouch, interactionInfo);
@@ -216,9 +226,13 @@ Interaction.prototype = {
             this.dragStarted = true;
         }
 
-        var lastDrag = this.moves[this.moves.length-2] || this.lastStart;
-        lastDrag && (currentTouch.angle = Math.atan2(currentTouch.pageY - lastDrag.pageY, currentTouch.pageX - lastDrag.pageX) * 180 / Math.PI);
-        this.angle = currentTouch.angle || 0;
+        var moveDelta = this.getMoveDelta(),
+            angle = 0;
+        if(moveDelta){
+            angle = getAngle(moveDelta);
+        }
+
+        this.angle = currentTouch.angle = angle;
 
         if(this.dragStarted){
             this.phase = 'drag';
@@ -229,6 +243,13 @@ Interaction.prototype = {
     end: function(event, interactionInfo){
         if(!interactionInfo){
             interactionInfo = event;
+        }
+
+        // Update the interaction
+        setInheritedData(this, interactionInfo);
+
+        if(!this.moves){
+            this.moves = [];
         }
 
         // Update the interaction
@@ -261,15 +282,17 @@ Interaction.prototype = {
         }
     },
     getMoveDelta: function(){
-        if(this.moves.length > 1){
-            var current = this.moves[this.moves.length-1],
-                previous = this.moves[this.moves.length-2];
+        var current = this.moves[this.moves.length-1],
+            previous = this.moves[this.moves.length-2] || this.lastStart;
 
-            return {
-                x: current.pageX - previous.pageX,
-                y: current.pageY - previous.pageY
-            };
+        if(!current || !previous){
+            return;
         }
+
+        return {
+            x: current.pageX - previous.pageX,
+            y: current.pageY - previous.pageY
+        };
     },
     getSpeed: function(){
         if(this.moves.length > 1){
@@ -281,14 +304,15 @@ Interaction.prototype = {
         return 0;
     },
     getCurrentAngle: function(blend){
-        var currentPosition,
+        var phase = this.phase,
+            currentPosition,
             lastAngle,
             i = this.moves.length-1,
             angle,
             firstAngle,
             angles = [],
             blendSteps = 20/(this.getSpeed()*2+1),
-            stepsUsed = 0;
+            stepsUsed = 1;
 
         if(this.moves && this.moves.length){
 
@@ -296,12 +320,16 @@ Interaction.prototype = {
             angle = firstAngle = currentPosition.angle;
 
             if(blend && this.moves.length > 1){
-                while(--i > 0 && this.moves.length - i < blendSteps){
+                while(
+                    --i > 0 &&
+                    this.moves.length - i < blendSteps &&
+                    this.moves[i].phase === phase
+                ){
                     lastAngle = this.moves[i].angle;
                     if(Math.abs(lastAngle - firstAngle) > 180){
-                        angle -= lastAngle
+                        angle -= lastAngle;
                     }else{
-                        angle += lastAngle
+                        angle += lastAngle;
                     }
                     stepsUsed++;
                 }
