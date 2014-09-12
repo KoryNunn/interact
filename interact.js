@@ -2,7 +2,8 @@ var interactions = [],
     minMoveDistance = 5,
     interact,
     maximumMovesToPersist = 1000, // Should be plenty..
-    propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY,shiftKey,x,y'.split(','); // Stuff that will be on every interaction.
+    propertiesToCopy = 'target,pageX,pageY,clientX,clientY,offsetX,offsetY,screenX,screenY,shiftKey,x,y'.split(','), // Stuff that will be on every interaction.
+    d = typeof document !== 'undefined' ? document : null;
 
 function Interact(){
     this._elements = [];
@@ -76,11 +77,11 @@ function getActualTarget() {
 
     // IE is stupid and doesn't support scrollX/Y
     if(scrollX === undefined){
-        scrollX = document.body.scrollLeft;
-        scrollY = document.body.scrollTop;
+        scrollX = d.body.scrollLeft;
+        scrollY = d.body.scrollTop;
     }
 
-    return document.elementFromPoint(this.pageX - window.scrollX, this.pageY - window.scrollY);
+    return d.elementFromPoint(this.pageX - window.scrollX, this.pageY - window.scrollY);
 }
 
 function getMoveDistance(x1,y1,x2,y2){
@@ -379,13 +380,13 @@ function cancel(event){
     }
 }
 
-addEvent(document, 'touchstart', start);
-addEvent(document, 'touchmove', drag);
-addEvent(document, 'touchend', end);
-addEvent(document, 'touchcancel', cancel);
+addEvent(d, 'touchstart', start);
+addEvent(d, 'touchmove', drag);
+addEvent(d, 'touchend', end);
+addEvent(d, 'touchcancel', cancel);
 
 var mouseIsDown = false;
-addEvent(document, 'mousedown', function(event){
+addEvent(d, 'mousedown', function(event){
     mouseIsDown = true;
 
     if(!interactions.length){
@@ -400,7 +401,7 @@ addEvent(document, 'mousedown', function(event){
 
     getInteraction().start(event);
 });
-addEvent(document, 'mousemove', function(event){
+addEvent(d, 'mousemove', function(event){
     if(!interactions.length){
         new Interaction(event);
     }
@@ -417,7 +418,7 @@ addEvent(document, 'mousemove', function(event){
         interaction.move(event);
     }
 });
-addEvent(document, 'mouseup', function(event){
+addEvent(d, 'mouseup', function(event){
     mouseIsDown = false;
 
     var interaction = getInteraction();
@@ -431,10 +432,14 @@ addEvent(document, 'mouseup', function(event){
 });
 
 function addEvent(element, type, callback) {
+    if(element == null){
+        return;
+    }
+
     if(element.addEventListener){
         element.addEventListener(type, callback);
     }
-    else if(document.attachEvent){
+    else if(d.attachEvent){
         element.attachEvent("on"+ type, callback);
     }
 }
