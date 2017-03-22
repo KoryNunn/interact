@@ -204,6 +204,11 @@ Interaction.prototype = {
             interactionInfo = event;
         }
 
+        if(!this.lastStart){
+            this.start(event, interactionInfo);
+            return;
+        }
+
         var currentTouch = {
                 time: new Date(),
                 phase: 'drag'
