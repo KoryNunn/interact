@@ -437,10 +437,10 @@ function addEvent(element, type, callback) {
     }
 
     if(element.addEventListener){
-        element.addEventListener(type, callback);
+        element.addEventListener(type, callback, { passive: false });
     }
     else if(d.attachEvent){
-        element.attachEvent("on"+ type, callback);
+        element.attachEvent("on"+ type, callback, { passive: false });
     }
 }
 

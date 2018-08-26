@@ -1,17 +1,14 @@
 {
   "author": "Kory Nunn <knunn187@gmail.com>",
   "contributors": [
-    {
-      "name": "Kory Nunn",
-      "email": "knunn187@gmail.com"
-    }
+    "Kory Nunn <knunn187@gmail.com>"
   ],
-  "name": "interact-js",
+  "name": "interact",
   "description": "A small interaction event unifiying library",
   "version": "2.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/korynunn/interact.git"
+    "url": "git+https://github.com/korynunn/interact.git"
   },
   "main": "interact.js",
   "keywords": [
@@ -21,6 +18,16 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "crel": "^1.1.2"
+    "crel": "^1.1.2",
+    "watchify": "^3.11.0"
+  },
+  "bugs": {
+    "url": "https://github.com/korynunn/interact/issues"
+  },
+  "homepage": "https://github.com/korynunn/interact#readme",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify -d test.js -o test.browser.js"
   }
 }
